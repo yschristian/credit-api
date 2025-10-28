@@ -1,0 +1,104 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+enum PaymentType {
+  DEPOSIT
+  WITHDRAW
+}
+
+enum LoanStatus {
+  PENDING
+  APPROVED
+  ACTIVE
+  COMPLETED
+  REJECTED
+  DEFAULTED
+}
+
+model User {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  email         String @unique
+  name          String
+  phone         String @unique
+  password      String
+  balance       Float  @default(0)
+  totalDeposits Float  @default(0)
+  totalWithdrawals Float @default(0)
+  loanBalance Float @default(0)
+  emailToken String?
+  status     Boolean  @default(true)
+  joinDate   DateTime @default(now())
+  role       Role     @default(CUSTOMER)
+
+  savings          Savings[]
+  loans            Loan[]
+  paymentHistories PaymentHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Savings {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String      @db.ObjectId
+  amount      Float
+  paymentType PaymentType
+  reference   String? // Transaction reference
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Loan {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  loanAmount     Float
+  interestRate   Float
+  duration       Int 
+  monthlyPayment Float
+  amountPaid       Float @default(0)
+  remainingBalance Float
+  status  LoanStatus @default(PENDING)
+  purpose String
+
+  // Dates
+  applicationDate  DateTime  @default(now())
+  approvalDate     DateTime?
+  disbursementDate DateTime?
+  dueDate          DateTime?
+  nextPaymentDate  DateTime?
+
+  // Relations
+  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paymentHistories PaymentHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PaymentHistory {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String  @db.ObjectId
+  loanId    String  @db.ObjectId
+  amount    Float
+  status    String 
+  reference String?
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  loan Loan @relation(fields: [loanId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
