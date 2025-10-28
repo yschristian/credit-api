@@ -98,7 +98,7 @@ export class AuthService {
   async refreshToken(refreshToken: string) {
     try {
       // Verify refresh token
-      const decoded = verifyRefreshToken(refreshToken);
+      const decoded:any = verifyRefreshToken(refreshToken);
 
       // Find user
       const user = await this.usersRepository.findById(decoded.id);

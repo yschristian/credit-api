@@ -1,32 +1,26 @@
-import jwt from "jsonwebtoken";
+import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import { config } from "../config/env";
 
-export interface JwtPayload {
-  id: string;
-  email: string;
-  role: string;
-}
+export const generateAccessToken = (payload: object): string => {
+  const options: SignOptions = {
+    expiresIn: config.jwtExpiresIn as any ,
+  };
 
-export const generateAccessToken = (payload: JwtPayload): string => {
-  return jwt.sign(
-    payload,
-    config.jwtSecret,
-    { expiresIn: config.jwtExpiresIn }
-  );
+  return jwt.sign(payload, config.jwtSecret as Secret, options);
 };
 
-export const generateRefreshToken = (payload: JwtPayload): string => {
-  return jwt.sign(
-    payload,
-    config.jwtRefreshSecret,
-    { expiresIn: config.jwtRefreshExpiresIn }
-  );
+export const generateRefreshToken = (payload: object): string => {
+  const options: SignOptions = {
+    expiresIn: config.jwtRefreshExpiresIn as any,
+  };
+
+  return jwt.sign(payload, config.jwtRefreshSecret as Secret, options);
 };
 
-export const verifyAccessToken = (token: string): JwtPayload => {
-  return jwt.verify(config.jwtSecret, token) as JwtPayload;
+export const verifyAccessToken = (token: string) => {
+  return jwt.verify(token, config.jwtSecret as Secret);
 };
 
-export const verifyRefreshToken = (token: string): JwtPayload => {
-  return jwt.verify(token, config.jwtRefreshSecret) as JwtPayload;
+export const verifyRefreshToken = (token: string) => {
+  return jwt.verify(token, config.jwtRefreshSecret as Secret);
 };

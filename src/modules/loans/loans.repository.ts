@@ -109,7 +109,7 @@ export class LoansRepository {
     const result = await prisma.loan.aggregate({
       where: {
         userId,
-        status: { in: ["ACTIVE", "PENDING", "APPROVED"] },
+        status: { in: ["ACTIVE", "APPROVED"] },
       },
       _sum: {
         remainingBalance: true,
@@ -118,6 +118,21 @@ export class LoansRepository {
 
     return result._sum.remainingBalance || 0;
   }
+
+  async getPendingLoansAmount(userId: string) {
+  const result = await prisma.loan.aggregate({
+    where: {
+      userId,
+      status: "PENDING",
+    },
+    _sum: {
+      loanAmount: true,  
+    },
+  });
+
+  return result._sum.loanAmount || 0;
+}
+
 
   async getUserLoanStats(userId: string) {
     const activeLoans = await prisma.loan.count({

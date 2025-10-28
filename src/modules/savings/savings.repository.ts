@@ -1,19 +1,18 @@
 import prisma from "../../config/database";
-import { PaymentType } from "@prisma/client";
 
 export class SavingsRepository {
   async createTransaction(
     userId: string,
     amount: number,
-    paymentType: PaymentType,
-    reference?: string
+    paymentType: any,
+    referenceId?: string
   ) {
     return prisma.savings.create({
       data: {
         userId,
         amount,
         paymentType,
-        reference,
+        referenceId
       },
     });
   }

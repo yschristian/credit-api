@@ -23,7 +23,7 @@ export const authenticate = (
     }
 
     const token = authHeader.substring(7);
-    const decoded = verifyAccessToken(token);
+    const decoded:any = verifyAccessToken(token);
 
     req.user = decoded;
     next();

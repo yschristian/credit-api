@@ -2,7 +2,7 @@ import { Router } from "express";
 import { LoansController } from "./loans.controller";
 import { authenticate, authorize } from "../../middleware/auth.middleware";
 import { validate } from "../../middleware/validation.middleware";
-import { ApplyLoanDto, ApproveLoanDto, RejectLoanDto } from "./loans.dto";
+import { ApplyLoanDto, } from "./loans.dto";
 
 const router = Router();
 const controller = new LoansController();
@@ -91,7 +91,6 @@ router.put(
   "/:id/approve",
   authenticate,
   authorize("ADMIN"),
-  validate(ApproveLoanDto),
   controller.approveLoan
 );
 
@@ -108,7 +107,6 @@ router.put(
   "/:id/reject",
   authenticate,
   authorize("ADMIN"),
-  validate(RejectLoanDto),
   controller.rejectLoan
 );
 

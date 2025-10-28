@@ -53,8 +53,8 @@ model Savings {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   userId      String      @db.ObjectId
   amount      Float
-  paymentType PaymentType
-  reference   String? // Transaction reference
+  paymentType PaymentType  @default(DEPOSIT)
+  referenceId   String? // Transaction reference
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -10,6 +10,7 @@ export const CreateUserDto = z.object({
 export const UpdateUserDto = z.object({
   name: z.string().min(2).optional(),
   phone: z.string().regex(/^\+250\d{9}$/).optional(),
+  loanBalance : z.number().min(0).optional(),
   status: z.boolean().optional(),
 });
 

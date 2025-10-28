@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const DepositDto = z.object({
   amount: z.number().positive("Amount must be positive"),
-  paymentType: z.string().min(1, "Payment type is required"),
+  paymentType: z.string().min(1, "Payment type is required").optional(),
   reference: z.string().optional(),
 });
 

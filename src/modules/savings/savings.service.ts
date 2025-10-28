@@ -6,6 +6,7 @@ import {
   NotFoundException,
 } from "../../common/exceptions";
 import { CONSTANTS } from "../../common/constants";
+import { ref } from "process";
 
 export class SavingsService {
   private repository: SavingsRepository;
@@ -22,13 +23,13 @@ export class SavingsService {
     if (!user) {
       throw new NotFoundException("User not found");
     }
-
+    const referenceId = `DEP-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     // Create deposit transaction
     const transaction = await this.repository.createTransaction(
       userId,
       data.amount,
-      "DEPOSIT",
       data.paymentType,
+      referenceId
     );
 
     // Calculate new values
@@ -67,10 +68,11 @@ export class SavingsService {
     }
 
     // Create withdrawal transaction
+    const referenceId = `WITH-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const transaction = await this.repository.createTransaction(
       userId,
       data.amount,
-      "WITHDRAW",
+      referenceId,
       data.paymentType
     );
 

@@ -73,7 +73,7 @@ async function main() {
         userId: user.id,
         amount: depositAmount,
         paymentType: "DEPOSIT",
-        reference: `MTN-${Date.now()}`,
+        referenceId: `MTN-${Date.now()}`,
       },
     });
 
