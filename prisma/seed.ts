@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Starting database seeding...");
+  console.log(" Starting database seeding...");
 
   // Create admin user
   const adminPassword = await bcrypt.hash("admin123", 10);
@@ -30,19 +30,19 @@ async function main() {
   // Create sample customers
   const customers = [
     {
-      email: "jean.uwimana@example.com",
+      email: "jean.uwimana@gmail.com",
       name: "Jean Uwimana",
       phone: "+250788123456",
       password: await bcrypt.hash("password123", 10),
     },
     {
-      email: "marie.mukamana@example.com",
+      email: "marie.mukamana@gmail.com.com",
       name: "Marie Mukamana",
       phone: "+250788234567",
       password: await bcrypt.hash("password123", 10),
     },
     {
-      email: "patrick.nkusi@example.com",
+      email: "patrick.nkusi@gmail.com.com",
       name: "Patrick Nkusi",
       phone: "+250788345678",
       password: await bcrypt.hash("password123", 10),
@@ -64,7 +64,7 @@ async function main() {
       },
     });
 
-    console.log("✅ Customer created:", user.email);
+    console.log("Customer created:", user.email);
 
     // Create sample deposits
     const depositAmount = Math.floor(Math.random() * 50000) + 10000;
@@ -73,7 +73,7 @@ async function main() {
         userId: user.id,
         amount: depositAmount,
         paymentType: "DEPOSIT",
-        referenceId: `MTN-${Date.now()}`,
+        referenceId: `DEP-${Date.now()}`,
       },
     });
 
@@ -87,15 +87,15 @@ async function main() {
       },
     });
 
-    console.log(`✅ Created deposit for ${user.name}: RWF ${depositAmount}`);
+    console.log(` Created deposit for ${user.name}: RWF ${depositAmount}`);
   }
 
-  console.log("🎉 Database seeding completed!");
+  console.log(" Database seeding completed!");
 }
 
 main()
   .catch((e) => {
-    console.error("❌ Seeding error:", e);
+    console.error(" Seeding error:", e);
     process.exit(1);
   })
   .finally(async () => {
