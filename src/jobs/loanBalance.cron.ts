@@ -31,20 +31,20 @@ export function startLoanBalanceUpdateJob() {
 
           updatedCount++;
           console.log(
-            `✅ Updated loan balance for ${user.email}: RWF ${newLoanBalance.toLocaleString()}`
+            `Updated loan balance for ${user.email}: RWF ${newLoanBalance.toLocaleString()}`
           );
         }
       }
 
       console.log(
-        `✅ Loan balance update job completed! Updated ${updatedCount} users.`
+        `Loan balance update job completed! Updated ${updatedCount} users.`
       );
     } catch (error) {
-      console.error("❌ Error in loan balance update job:", error);
+      console.error(" Error in loan balance update job:", error);
     }
   });
 
-  console.log("⏰ Loan balance update cron job started (runs daily at midnight)");
+  console.log("Loan balance update cron job started (runs daily at midnight)");
 }
 
 /**
@@ -77,15 +77,12 @@ export function startOverdueLoanCheckJob() {
       });
 
       if (overdueLoans.length > 0) {
-        console.log(`⚠️ Found ${overdueLoans.length} overdue loans`);
+        console.log(` Found ${overdueLoans.length} overdue loans`);
 
         for (const loan of overdueLoans) {
-          // You can add email notifications here
           console.log(
-            `⚠️ Overdue loan: ${loan.user.name} (${loan.user.email}) - Loan ID: ${loan.id}`
+            `Overdue loan: ${loan.user.name} (${loan.user.email}) - Loan ID: ${loan.id}`
           );
-
-          // Optionally update loan status to DEFAULTED after certain days
           const daysSinceOverdue = Math.floor(
             (now.getTime() - loan.nextPaymentDate!.getTime()) / (1000 * 60 * 60 * 24)
           );
@@ -95,16 +92,16 @@ export function startOverdueLoanCheckJob() {
               where: { id: loan.id },
               data: { status: "DEFAULTED" },
             });
-            console.log(`❌ Marked loan ${loan.id} as DEFAULTED`);
+            console.log(`Marked loan ${loan.id} as DEFAULTED`);
           }
         }
       } else {
-        console.log("✅ No overdue loans found");
+        console.log("No overdue loans found");
       }
     } catch (error) {
-      console.error("❌ Error checking overdue loans:", error);
+      console.error("Error checking overdue loans:", error);
     }
   });
 
-  console.log("⏰ Overdue loan check cron job started (runs daily at 1 AM)");
+  console.log("Overdue loan check cron job started (runs daily at 1 AM)");
 }

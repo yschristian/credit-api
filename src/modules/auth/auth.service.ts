@@ -19,22 +19,17 @@ export class AuthService {
   }
 
   async register(data: RegisterInput) {
-    // Check if user already exists
     const existingUser = await this.usersRepository.findByEmail(data.email);
     if (existingUser) {
       throw new BadRequestException("User with this email already exists");
     }
 
-    // Hash password
     const hashedPassword = await hashPassword(data.password);
 
-    // Create user
     const user = await this.usersRepository.create({
       ...data,
       password: hashedPassword,
     });
-
-    // Generate tokens
     const accessToken = generateAccessToken({
       id: user.id,
       email: user.email,
@@ -55,24 +50,20 @@ export class AuthService {
   }
 
   async login(data: LoginInput) {
-    // Find user
+
     const user = await this.usersRepository.findByEmail(data.email);
     if (!user) {
       throw new UnauthorizedException("Invalid email or password");
     }
 
-    // Check if user is active
     if (!user.status) {
       throw new UnauthorizedException("Account is suspended");
     }
 
-    // Verify password
     const isPasswordValid = await comparePassword(data.password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException("Invalid email or password");
     }
-
-    // Generate tokens
     const accessToken = generateAccessToken({
       id: user.id,
       email: user.email,
@@ -85,7 +76,6 @@ export class AuthService {
       role: user.role,
     });
 
-    // Remove password from response
     const { password, ...userWithoutPassword } = user;
 
     return {
@@ -97,16 +87,13 @@ export class AuthService {
 
   async refreshToken(refreshToken: string) {
     try {
-      // Verify refresh token
       const decoded:any = verifyRefreshToken(refreshToken);
 
-      // Find user
       const user = await this.usersRepository.findById(decoded.id);
       if (!user || !user.status) {
         throw new UnauthorizedException("Invalid refresh token");
       }
 
-      // Generate new access token
       const accessToken = generateAccessToken({
         id: user.id,
         email: user.email,

@@ -14,16 +14,13 @@ export class UsersService {
   }
 
   async createUser(data: CreateUserInput) {
-    // Check if user exists
     const existingUser = await this.repository.findByEmail(data.email);
     if (existingUser) {
       throw new BadRequestException("User with this email already exists");
     }
 
-    // Hash password
     const hashedPassword = await hashPassword(data.password);
 
-    // Create user
     const user = await this.repository.create({
       ...data,
       password: hashedPassword,
@@ -56,12 +53,12 @@ export class UsersService {
   }
 
   async updateUser(id: string, data: UpdateUserInput) {
-    await this.getUserById(id); // Check if user exists
+    await this.getUserById(id); 
     return this.repository.update(id, data);
   }
 
   async deleteUser(id: string) {
-    await this.getUserById(id); // Check if user exists
+    await this.getUserById(id); 
     return this.repository.delete(id);
   }
 }

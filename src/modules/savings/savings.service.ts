@@ -18,13 +18,12 @@ export class SavingsService {
   }
 
   async deposit(userId: string, data: DepositInput) {
-    // Get user
     const user = await this.usersRepository.findById(userId);
     if (!user) {
       throw new NotFoundException("User not found");
     }
     const referenceId = `DEP-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-    // Create deposit transaction
+    
     const transaction = await this.repository.createTransaction(
       userId,
       data.amount,
@@ -32,13 +31,11 @@ export class SavingsService {
       referenceId
     );
 
-    // Calculate new values
     const newBalance = user.balance + data.amount;
     const newTotalDeposits = user.totalDeposits + data.amount;
     const newLoanBalance =
       (newTotalDeposits - user.totalWithdrawals) * CONSTANTS.LOAN_TO_DEPOSIT_RATIO;
 
-    // Update user balance
     await this.usersRepository.updateBalance(
       userId,
       newBalance,
@@ -56,18 +53,16 @@ export class SavingsService {
   }
 
   async withdraw(userId: string, data: WithdrawInput) {
-    // Get user
+
     const user = await this.usersRepository.findById(userId);
     if (!user) {
       throw new NotFoundException("User not found");
     }
 
-    // Check balance
     if (user.balance < data.amount) {
       throw new BadRequestException("Insufficient balance");
     }
 
-    // Create withdrawal transaction
     const referenceId = `WITH-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const transaction = await this.repository.createTransaction(
       userId,
@@ -76,13 +71,11 @@ export class SavingsService {
       data.paymentType
     );
 
-    // Calculate new values
     const newBalance = user.balance - data.amount;
     const newTotalWithdrawals = user.totalWithdrawals + data.amount;
     const newLoanBalance =
       (user.totalDeposits - newTotalWithdrawals) * CONSTANTS.LOAN_TO_DEPOSIT_RATIO;
 
-    // Update user balance
     await this.usersRepository.updateBalance(
       userId,
       newBalance,

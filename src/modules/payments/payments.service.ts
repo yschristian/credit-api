@@ -19,37 +19,33 @@ export class PaymentsService {
   }
 
  async makePayment(userId: string, data: MakePaymentInput) {
-  // Get loan
+
   const loan = await this.loansRepository.findById(data.loanId);
   if (!loan) {
     throw new NotFoundException("Loan not found");
   }
 
-  // Check if loan belongs to user
   if (loan.userId !== userId) {
     throw new BadRequestException("Unauthorized to make payment for this loan");
   }
 
-  // Check if loan is active
   if (loan.status !== "ACTIVE") {
     throw new BadRequestException("Loan is not active");
   }
 
-  // Check payment amount
   if (data.amount > loan.remainingBalance) {
     throw new BadRequestException(
       `Payment amount exceeds remaining balance of RWF ${loan.remainingBalance.toLocaleString()}`
     );
   }
 
-  // Get user
   const user = await this.usersRepository.findById(userId);
   if (!user) {
     throw new NotFoundException("User not found");
   }
 
   const reference =  `PAY-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-  // Create payment record
+  
   const payment = await this.repository.create({
     userId,
     loanId: data.loanId,
@@ -58,12 +54,10 @@ export class PaymentsService {
     reference: reference,
   });
 
-  // Update loan
   const newAmountPaid = loan.amountPaid + data.amount;
   const newRemainingBalance = Math.max(0, loan.remainingBalance - data.amount);
   const newStatus = newRemainingBalance === 0 ? "COMPLETED" : "ACTIVE";
 
-  // Calculate next payment date (30 days from now)
   const nextPaymentDate =
     newStatus === "COMPLETED"
       ? null
@@ -83,7 +77,7 @@ export class PaymentsService {
     loanBalance: newUserLoanBalance,
   });
 
-  console.log(`✅ User loan balance restored: ${user.loanBalance} → ${newUserLoanBalance}`);
+  console.log(`User loan balance restored: ${user.loanBalance} → ${newUserLoanBalance}`);
 
   return {
     payment,

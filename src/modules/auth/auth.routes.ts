@@ -18,6 +18,11 @@ const controller = new AuthController();
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - email
+ *               - name
+ *               - phone
+ *               - password
  *             properties:
  *               email:
  *                 type: string
@@ -27,8 +32,12 @@ const controller = new AuthController();
  *                 type: string
  *               password:
  *                 type: string
+ *     responses:
+ *       201:
+ *         description: User registered successfully
  */
 router.post("/register", validate(RegisterDto), controller.register);
+
 
 /**
  * @swagger
@@ -42,11 +51,17 @@ router.post("/register", validate(RegisterDto), controller.register);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - email
+ *               - password
  *             properties:
  *               email:
  *                 type: string
  *               password:
  *                 type: string
+ *     responses:
+ *       200:
+ *         description: User logged in successfully
  */
 router.post("/login", validate(LoginDto), controller.login);
 
@@ -62,14 +77,20 @@ router.post("/login", validate(LoginDto), controller.login);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - refreshToken
  *             properties:
  *               refreshToken:
  *                 type: string
+ *     responses:
+ *       200:
+ *         description: Access token refreshed successfully
  */
 router.post(
   "/refresh-token",
   validate(RefreshTokenDto),
   controller.refreshToken
 );
+
 
 export default router;

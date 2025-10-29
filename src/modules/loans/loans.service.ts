@@ -255,9 +255,9 @@ export class LoansService {
   }
 
   private calculateInterestRate(duration: number): number {
-    if (duration <= 3) return 15; // 15% for 3 months or less
-    if (duration <= 6) return 12; // 12% for 4-6 months
-    if (duration <= 12) return 10; // 10% for 7-12 months
-    return 8; // 8% for more than 12 months
+    if (duration <= 3) return 15; 
+    if (duration <= 6) return 12; 
+    if (duration <= 12) return 10; 
+    return 8; 
   }
 }

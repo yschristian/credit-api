@@ -2,7 +2,7 @@ import { Router } from "express";
 import { LoansController } from "./loans.controller";
 import { authenticate, authorize } from "../../middleware/auth.middleware";
 import { validate } from "../../middleware/validation.middleware";
-import { ApplyLoanDto, } from "./loans.dto";
+import { ApplyLoanDto } from "./loans.dto";
 
 const router = Router();
 const controller = new LoansController();
@@ -15,6 +15,33 @@ const controller = new LoansController();
  *     summary: Apply for a loan
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - loanAmount
+ *               - duration
+ *               - purpose
+ *             properties:
+ *               loanAmount:
+ *                 type: number
+ *                 example: 5000
+ *               duration:
+ *                 type: number
+ *                 example: 12
+ *               purpose:
+ *                 type: string
+ *                 example: "Business expansion"
+ *     responses:
+ *       201:
+ *         description: Loan application submitted successfully
+ *       400:
+ *         description: Invalid input or insufficient balance
+ *       401:
+ *         description: Unauthorized
  */
 router.post(
   "/apply",
@@ -31,6 +58,11 @@ router.post(
  *     summary: Check loan eligibility
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Loan eligibility status retrieved successfully
+ *       401:
+ *         description: Unauthorized
  */
 router.get("/eligibility", authenticate, controller.getLoanEligibility);
 
@@ -42,6 +74,11 @@ router.get("/eligibility", authenticate, controller.getLoanEligibility);
  *     summary: Get user's loans
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of user's loans retrieved successfully
+ *       401:
+ *         description: Unauthorized
  */
 router.get("/my-loans", authenticate, controller.getUserLoans);
 
@@ -53,6 +90,11 @@ router.get("/my-loans", authenticate, controller.getUserLoans);
  *     summary: Get user's loan statistics
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Loan statistics retrieved successfully
+ *       401:
+ *         description: Unauthorized
  */
 router.get("/stats", authenticate, controller.getUserLoanStats);
 
@@ -64,6 +106,13 @@ router.get("/stats", authenticate, controller.getUserLoanStats);
  *     summary: Get all loans (Admin only)
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all loans retrieved successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden — Admins only
  */
 router.get("/", authenticate, authorize("ADMIN"), controller.getAllLoans);
 
@@ -75,6 +124,20 @@ router.get("/", authenticate, authorize("ADMIN"), controller.getAllLoans);
  *     summary: Get loan by ID
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: Loan ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Loan details retrieved successfully
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Loan not found
  */
 router.get("/:id", authenticate, controller.getLoanById);
 
@@ -86,6 +149,22 @@ router.get("/:id", authenticate, controller.getLoanById);
  *     summary: Approve loan (Admin only)
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: Loan ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Loan approved successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden — Admins only
+ *       404:
+ *         description: Loan not found
  */
 router.put(
   "/:id/approve",
@@ -102,6 +181,22 @@ router.put(
  *     summary: Reject loan (Admin only)
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: Loan ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Loan rejected successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden — Admins only
+ *       404:
+ *         description: Loan not found
  */
 router.put(
   "/:id/reject",
