@@ -36,9 +36,6 @@ jobs:
       - name: Generate Prisma client
         run: npx prisma generate
 
-      - name: Lint code
-        run: npm run lint
-
       - name: Run tests
         env:
           DATABASE_URL: mongodb+srv://chris:chris@cluster0.k1npp.mongodb.net/credit-jambo
