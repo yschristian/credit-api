@@ -7,22 +7,22 @@ A full-stack financial system demonstrating scalable architecture, modularity, a
 ![MongoDB](https://img.shields.io/badge/MongoDB-6.0-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 🚀 Features
+## Features
 
-- ✅ **Authentication & Authorization** - JWT-based with role management (Admin/Customer)
-- ✅ **Savings Management** - Deposit and withdrawal tracking
-- ✅ **Loan System** - Application, approval, and repayment workflows
-- ✅ **Payment History** - Complete transaction tracking
-- ✅ **Credit Scoring** - Dynamic loan eligibility calculation
-- ✅ **Automated Jobs** - Cron jobs for balance updates and overdue checks
-- ✅ **API Documentation** - Interactive Swagger/OpenAPI docs
-- ✅ **DTOs & Validation** - Zod schema validation
-- ✅ **Error Handling** - Centralized error management
-- ✅ **Repository Pattern** - Clean architecture implementation
+-  **Authentication & Authorization** - JWT-based with role management (Admin/Customer)
+-  **Savings Management** - Deposit and withdrawal tracking
+-  **Loan System** - Application, approval, and repayment workflows
+-  **Payment History** - Complete transaction tracking
+-  **Credit Scoring** - Dynamic loan eligibility calculation
+-  **Automated Jobs** - Cron jobs for balance updates and overdue checks
+-  **API Documentation** - Interactive Swagger/OpenAPI docs
+-  **DTOs & Validation** - Zod schema validation
+-  **Error Handling** - Centralized error management
+-  **Repository Pattern** - Clean architecture implementation
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
@@ -33,11 +33,11 @@ Before you begin, ensure you have the following installed:
 
 ---
 
-## ⚡ Quick Start
+##  Quick Start
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/credit-jambo-backend.git
+git clone https://github.com/aimeeumuhoza/credit-api.git
 cd credit-jambo-backend
 ```
 
@@ -50,7 +50,7 @@ npm install
 
 Create a `.env` file in the root directory:
 ```bash
-cp .env.example .env
+cp .env.gmail .env
 ```
 
 Update the `.env` file with your configuration:
@@ -63,13 +63,13 @@ SERVER_PORT=4000
 NODE_ENV=development
 
 # JWT Secrets (Change these in production!)
-JWT_SECRET="your_super_secret_jwt_key_change_in_production"
-JWT_EXPIRES_IN="7d"
-JWT_REFRESH_SECRET="your_super_secret_refresh_key_change_in_production"
-JWT_REFRESH_EXPIRES_IN="30d"
+JWT_SECRET=
+JWT_EXPIRES_IN=
+JWT_REFRESH_SECRET=
+JWT_REFRESH_EXPIRES_IN=
 
 # App
-SECRET_KEY="credit-jambo-secret"
+SECRET_KEY=
 ```
 
 ### 4. Database Setup
@@ -96,11 +96,11 @@ npm run dev
 
 The server will start on `http://localhost:4000`
 
-🎉 **Success!** Your API is now running!
+**Success!** Your API is now running!
 
 ---
 
-## 📚 API Documentation
+## API Documentation
 
 Once the server is running, access the interactive API documentation at:
 
@@ -108,7 +108,7 @@ Once the server is running, access the interactive API documentation at:
 
 ---
 
-## 🔑 Test Credentials
+## Test Credentials
 
 After running the seed script, you can use these credentials:
 
@@ -120,13 +120,13 @@ Password: admin123
 
 ### Customer Account
 ```
-Email: jean.uwimana@example.com
+Email: jean.uwimana@gmail.com
 Password: password123
 ```
 
 ---
 
-## 🛠️ Available Scripts
+##  Available Scripts
 
 | Command | Description |
 |---------|-------------|
@@ -141,7 +141,7 @@ Password: password123
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 ```
 credit-jambo-backend/
 ├── src/
@@ -179,61 +179,62 @@ credit-jambo-backend/
 │   ├── schema.prisma             # Database schema
 │   └── seed.ts                   # Database seeding
 ├── .env                          # Environment variables
-├── .env.example                  # Environment template
+├── .env.gmail                  # Environment template
 ├── package.json
 ├── tsconfig.json
 └── README.md
+
 ```
 
 ---
 
-## 🔐 API Endpoints
+## API Endpoints
 
 ### Authentication
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| POST | `/api/auth/register` | Register new user | ❌ |
-| POST | `/api/auth/login` | Login user | ❌ |
-| POST | `/api/auth/refresh-token` | Refresh access token | ❌ |
+| POST | `/api/auth/register` | Register new user | No |
+| POST | `/api/auth/login` | Login user | No |
+| POST | `/api/auth/refresh-token` | Refresh access token | No |
 
 ### Users
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| GET | `/api/users` | Get all users | ✅ Admin |
-| GET | `/api/users/profile` | Get current user profile | ✅ |
-| GET | `/api/users/:id` | Get user by ID | ✅ |
-| PUT | `/api/users/:id` | Update user | ✅ |
-| DELETE | `/api/users/:id` | Delete user | ✅ Admin |
+| GET | `/api/users` | Get all users | YES Admin |
+| GET | `/api/users/profile` | Get current user profile | YES |
+| GET | `/api/users/:id` | Get user by ID | YES |
+| PUT | `/api/users/:id` | Update user | YES |
+| DELETE | `/api/users/:id` | Delete user | YES Admin |
 
 ### Savings
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| POST | `/api/savings/deposit` | Make a deposit | ✅ |
-| POST | `/api/savings/withdraw` | Make a withdrawal | ✅ |
-| GET | `/api/savings/transactions` | Get user transactions | ✅ |
-| GET | `/api/savings/all-transactions` | Get all transactions | ✅ Admin |
-| GET | `/api/savings/stats` | Get savings statistics | ✅ |
+| POST | `/api/savings/deposit` | Make a deposit | YES |
+| POST | `/api/savings/withdraw` | Make a withdrawal | YES |
+| GET | `/api/savings/transactions` | Get user transactions | YES |
+| GET | `/api/savings/all-transactions` | Get all transactions | YES Admin |
+| GET | `/api/savings/stats` | Get savings statistics | YES |
 
 ### Loans
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| POST | `/api/loans/apply` | Apply for loan | ✅ |
-| GET | `/api/loans/eligibility` | Check loan eligibility | ✅ |
-| GET | `/api/loans/my-loans` | Get user's loans | ✅ |
-| GET | `/api/loans/stats` | Get loan statistics | ✅ |
-| GET | `/api/loans` | Get all loans | ✅ Admin |
-| GET | `/api/loans/:id` | Get loan by ID | ✅ |
-| PUT | `/api/loans/:id/approve` | Approve loan | ✅ Admin |
-| PUT | `/api/loans/:id/reject` | Reject loan | ✅ Admin |
+| POST | `/api/loans/apply` | Apply for loan | YES |
+| GET | `/api/loans/eligibility` | Check loan eligibility | YES |
+| GET | `/api/loans/my-loans` | Get user's loans | YES |
+| GET | `/api/loans/stats` | Get loan statistics | YES |
+| GET | `/api/loans` | Get all loans | YES Admin |
+| GET | `/api/loans/:id` | Get loan by ID | YES |
+| PUT | `/api/loans/:id/approve` | Approve loan | YES Admin |
+| PUT | `/api/loans/:id/reject` | Reject loan | YES Admin |
 
 ### Payments
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| POST | `/api/payments` | Make loan payment | ✅ |
-| GET | `/api/payments/my-payments` | Get user's payments | ✅ |
-| GET | `/api/payments/loan/:loanId` | Get loan payments | ✅ |
-| GET | `/api/payments/all` | Get all payments | ✅ Admin |
-| GET | `/api/payments/:id` | Get payment by ID | ✅ |
+| POST | `/api/payments` | Make loan payment | YES |
+| GET | `/api/payments/my-payments` | Get user's payments | YES |
+| GET | `/api/payments/loan/:loanId` | Get loan payments | YES |
+| GET | `/api/payments/all` | Get all payments | YES Admin |
+| GET | `/api/payments/:id` | Get payment by ID | YES |
 
 ---
 
@@ -247,7 +248,6 @@ Eligible Loan Amount = (Total Deposits - Total Withdrawals) × 50%
 ```
 
 **Requirements:**
-- Minimum balance: **RWF 5,000**
 - Active loans reduce available loan balance
 
 ### Interest Rates
@@ -272,7 +272,7 @@ Interest rates are calculated based on loan duration:
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Using Postman/Thunder Client
 
@@ -292,7 +292,7 @@ Content-Type: application/json
 Authorization: Bearer YOUR_ACCESS_TOKEN
 ```
 
-### Example: Make a Deposit
+### gmail: Make a Deposit
 ```json
 POST http://localhost:4000/api/savings/deposit
 Authorization: Bearer YOUR_ACCESS_TOKEN
@@ -300,8 +300,7 @@ Content-Type: application/json
 
 {
   "amount": 50000,
-  "method": "Mobile Money",
-  "reference": "MTN-123456789"
+  "paymentType":"DEPOSIT",
 }
 ```
 
@@ -331,7 +330,7 @@ JWT_REFRESH_SECRET="strong_random_refresh_key"
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -341,22 +340,20 @@ JWT_REFRESH_SECRET="strong_random_refresh_key"
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
-**Credit Jambo Ltd**
-- Email: hello@creditjambo.com
-- Phone: +250 788 268 451
-- Website: www.creditjambo.com
+**Aimee UMUHOZA**
+- Email: aimeeumuhoza1@gmail.com
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with [Express.js](https://expressjs.com/)
 - Database: [MongoDB](https://www.mongodb.com/)
@@ -365,6 +362,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Support
+## Support
 
-For support, email hello@creditjambo.com or create an issue in the repository.
+For support, email aimeeumuhoza1@gmail.com or create an issue in the repository.

@@ -41,12 +41,6 @@ async function main() {
       phone: "+250788234567",
       password: await bcrypt.hash("password123", 10),
     },
-    {
-      email: "patrick.nkusi@gmail.com.com",
-      name: "Patrick Nkusi",
-      phone: "+250788345678",
-      password: await bcrypt.hash("password123", 10),
-    },
   ];
 
   for (const customer of customers) {

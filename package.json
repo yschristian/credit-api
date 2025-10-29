@@ -15,7 +15,8 @@
     "test:unit": "jest --testPathPatterns=\\.test\\.ts$",
     "test:integration": "jest --testPathPatterns=\\.integration\\.test\\.ts$",
     "db:seed": "ts-node ./prisma/seed.ts",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+     "doc": "typedoc --entryPointStrategy expand --out docs src"
   },
   "keywords": [],
   "author": "",
@@ -53,6 +54,7 @@
     "supertest": "^7.1.4",
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
+    "typedoc": "^0.28.14",
     "typescript": "^5.5.4"
   }
 }
