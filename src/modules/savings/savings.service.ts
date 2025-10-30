@@ -67,8 +67,8 @@ export class SavingsService {
     const transaction = await this.repository.createTransaction(
       userId,
       data.amount,
+      data.paymentType,
       referenceId,
-      data.paymentType
     );
 
     const newBalance = user.balance - data.amount;
@@ -117,7 +117,7 @@ export class SavingsService {
       skip,
       limit
     );
-
+    
     return {
       transactions,
       pagination: {

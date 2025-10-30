@@ -56,7 +56,7 @@ cp .env.gmail .env
 Update the `.env` file with your configuration:
 ```env
 # Database
-DATABASE_URL="mongodb+srv://chris:chris@cluster0.k1npp.mongodb.net/credit-jambo"
+DATABASE_URL="mongodb+srv://umuhoza:umuhoza@cluster0.lq8fbsl.mongodb.net/credit-jambo"
 
 # Server
 SERVER_PORT=4000

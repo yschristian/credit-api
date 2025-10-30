@@ -38,7 +38,7 @@ jobs:
 
       - name: Run tests
         env:
-          DATABASE_URL: mongodb+srv://chris:chris@cluster0.k1npp.mongodb.net/credit-jambo
+          DATABASE_URL: mongodb+srv://umuhoza:umuhoza@cluster0.lq8fbsl.mongodb.net/credit-jambo
           JWT_SECRET: credit-jambo-secret
           JWT_REFRESH_SECRET: credit-jambo-refresh
           JWT_REFRESH_EXPIRES_IN: 5h
@@ -72,7 +72,7 @@ jobs:
 
       - name: Deploy to Production
         env:
-          DATABASE_URL: mongodb+srv://chris:chris@cluster0.k1npp.mongodb.net/credit-jambo
+          DATABASE_URL: mongodb+srv://umuhoza:umuhoza@cluster0.lq8fbsl.mongodb.net/credit-jambo
           JWT_SECRET: credit-jambo-secret
           JWT_REFRESH_SECRET: credit-jambo-refresh
           JWT_REFRESH_EXPIRES_IN: 5h
