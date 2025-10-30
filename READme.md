@@ -56,11 +56,11 @@ cp .env.gmail .env
 Update the `.env` file with your configuration:
 ```env
 # Database
-DATABASE_URL="mongodb+srv://umuhoza:umuhoza@cluster0.lq8fbsl.mongodb.net/credit-jambo"
+DATABASE_URL=
 
 # Server
-SERVER_PORT=4000
-NODE_ENV=development
+SERVER_PORT=
+NODE_ENV=
 
 # JWT Secrets (Change these in production!)
 JWT_SECRET=
@@ -323,9 +323,9 @@ npm start
 Update these in your production environment:
 ```env
 NODE_ENV=production
-DATABASE_URL="your_production_mongodb_url"
-JWT_SECRET="strong_random_secret_key"
-JWT_REFRESH_SECRET="strong_random_refresh_key"
+DATABASE_URL=
+JWT_SECRET=
+JWT_REFRESH_SECRET=
 ```
 
 ---
